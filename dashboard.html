@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Messages Dashboard</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f4f4;
+padding:20px;
+}
+
+h1{
+color:#333;
+}
+
+.stats{
+display:flex;
+gap:15px;
+margin-bottom:20px;
+}
+
+.card{
+background:white;
+padding:15px;
+border-radius:8px;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
+flex:1;
+}
+
+#search{
+width:100%;
+padding:10px;
+margin-bottom:20px;
+}
+
+.message{
+background:white;
+padding:15px;
+margin-bottom:15px;
+border-radius:8px;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
+position:relative;
+}
+
+.buttons{
+position:absolute;
+top:10px;
+right:10px;
+}
+
+button{
+border:none;
+padding:5px 10px;
+margin-left:5px;
+border-radius:5px;
+cursor:pointer;
+}
+
+.edit{
+background:orange;
+color:white;
+}
+
+.delete{
+background:red;
+color:white;
+}
+
+.pagination{
+margin-top:20px;
+}
+
+.page-btn{
+padding:8px 12px;
+margin-right:5px;
+background:#007BFF;
+color:white;
+border:none;
+border-radius:4px;
+cursor:pointer;
+}
+
+.active{
+background:#0056b3;
+}
+
+a {
+  display: inline-block;
+  margin-top: 20px;
+  color: #0077cc;
+  text-decoration: none;
+  font-weight: bold;
+}
+a .logout{
+  display: inline-block;
+  margin-top: 30px;
+  color: coral;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Admin Dashboard</h1>
+
+<div class="stats">
+
+<div class="card">
+<h2 id="total">0</h2>
+<p>Total Messages</p>
+</div>
+
+<div class="card">
+<h2 id="today">0</h2>
+<p>Messages Today</p>
+</div>
+
+<div class="card">
+<h2 id="latest">None</h2>
+<p>Latest Sender</p>
+</div>
+
+</div>
+
+<input id="search" placeholder="Search messages...">
+
+<div id="messages"></div>
+
+<div class="pagination" id="pagination"></div>
+<a href="/">Home</a>
+<a href="/contact">Contact</a>
+<a href="/about">About</a> <br>
+<a class="logout" href="/logout">Logout⛔</a>
+
+<script>
+
+let allMessages = [];
+let originalMessages = [];
+let currentPage = 1;
+const perPage = 5;
+
+// Load messages from server
+async function loadMessages() {
+  try {
+    const res = await fetch("/api/messages");
+    const data = await res.json();
+
+    allMessages = data;
+    originalMessages = data; // keep original for search
+
+    updateStats(data);
+    renderPage();
+  } catch (err) {
+    console.error("Failed to load messages:", err);
+  }
+}
+
+// Update dashboard stats
+function updateStats(messages) {
+  document.getElementById("total").innerText = messages.length;
+
+  const today = new Date().toLocaleDateString();
+  const todayMessages = messages.filter(m => m.created_at.includes(today));
+  document.getElementById("today").innerText = todayMessages.length;
+
+  document.getElementById("latest").innerText =
+    messages.length > 0 ? messages[messages.length - 1].name : "None";
+}
+
+// Render current page
+function renderPage() {
+  const start = (currentPage - 1) * perPage;
+  const end = start + perPage;
+  const pageMessages = allMessages.slice(start, end);
+
+  renderMessages(pageMessages);
+  renderPagination();
+}
+
+// Render messages into DOM
+function renderMessages(messages) {
+  const container = document.getElementById("messages");
+
+  if (messages.length === 0) {
+    container.innerHTML = "<p>No messages</p>";
+    return;
+  }
+
+  container.innerHTML = messages.map(msg => `
+    <div class="message">
+      <strong>${msg.name}</strong><br>
+      ${msg.email}<br>
+      <small>${msg.created_at}</small>
+      <p>${msg.message}</p>
+      <div class="buttons">
+        <button class="edit" onclick="editMessage(${msg.id})">Edit</button>
+        <button class="delete" onclick="deleteMessage(${msg.id})">Delete</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+// Render pagination buttons
+function renderPagination() {
+  const totalPages = Math.ceil(allMessages.length / perPage);
+  const container = document.getElementById("pagination");
+  container.innerHTML = "";
+
+  for (let i = 1; i <= totalPages; i++) {
+    const btn = document.createElement("button");
+    btn.innerText = i;
+    btn.className = "page-btn";
+    if (i === currentPage) btn.classList.add("active");
+    btn.onclick = () => { currentPage = i; renderPage(); };
+    container.appendChild(btn);
+  }
+}
+
+// Edit message
+async function editMessage(id) {
+  const text = prompt("Edit message:");
+  if (!text) return;
+
+  await fetch(`/api/messages/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text })
+  });
+
+  loadMessages();
+}
+
+// Delete message
+async function deleteMessage(id) {
+  if (!confirm("Delete message?")) return;
+
+  await fetch(`/api/messages/${id}`, { method: "DELETE" });
+  loadMessages();
+}
+
+// Search filter
+document.getElementById("search").addEventListener("input", (e) => {
+  const term = e.target.value.toLowerCase();
+
+  allMessages = originalMessages.filter(m =>
+    m.name.toLowerCase().includes(term) ||
+    m.email.toLowerCase().includes(term) ||
+    m.message.toLowerCase().includes(term)
+  );
+
+  currentPage = 1;
+  renderPage();
+});
+
+// Initial load + auto-refresh every 5s
+loadMessages();
+setInterval(loadMessages, 5000);
+
+</script>
+
+</body>
+</html>
