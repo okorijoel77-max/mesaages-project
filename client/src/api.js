@@ -1,7 +1,6 @@
 // src/api.js
-
-// GET all messages
-export const getMessages = async () => {
+const BASE_URL = "httpss://messages-backend.onrender.com";
+// GET all messageshttpsonst getMessages = async () => {
   const res = await fetch("/api/messages");
   return res.json();
 };
