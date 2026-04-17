@@ -1,3 +1,4 @@
+const cors = require("cors");
 const express = require("express");
 const path = require("path");
 const session = require("express-session");
@@ -13,6 +14,9 @@ const PORT = 3000;
 // =====================
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors({
+  origin: "*"
+}));
 
 app.use(session({
   secret: "mysecretkey",
