@@ -15,7 +15,7 @@ const PORT = 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors({
-  origin: "*"
+  origin: "https://mesaages-project-okorijoel77-maxs-projects.vercel.app"
 }));
 
 app.use(session({
