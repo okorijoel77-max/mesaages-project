@@ -1,6 +1,6 @@
 // src/api.js
 
-const BASE_URL = "https://messages-backend.onrender.com";
+const BASE_URL ="https://messages-backend-p1nt.onrender.com";
 
 // GET all messages
 export const getMessages = async () => {
