@@ -15,7 +15,6 @@ export default function MessageForm({ onAdd }) {
       await addMessage(newMessage);
       onAdd();
 
-      // clear inputs
       setName("");
       setEmail("");
       setMessage("");
@@ -48,3 +47,4 @@ export default function MessageForm({ onAdd }) {
     </form>
   );
 }
+
