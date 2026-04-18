@@ -1,34 +1,18 @@
 const BASE_URL = "https://messages-backend-p1nt.onrender.com";
 
-// GET all messages
 export const getMessages = async () => {
-  const res = await fetch(`${BASE_URL}/api/messages`);
-  const data = await res.json();
-  console.log("GET:", data);
-  return data;
-};
+  try {
+    const res = await fetch(`${BASE_URL}/api/messages`);
 
-// POST new message
-export const addMessage = async (newMessage) => {
-  console.log("SENDING:", newMessage);
+    if (!res.ok) {
+      throw new Error("Failed to fetch");
+    }
 
-  const res = await fetch(`${BASE_URL}/api/messages`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(newMessage)
-  });
-
-  const data = await res.json();
-  console.log("POST RESPONSE:", data);
-
-  return data;
-};
-
-// DELETE message
-export const deleteMessage = async (id) => {
-  await fetch(`${BASE_URL}/api/messages/${id}`, {
-    method: "DELETE"
-  });
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    alert("Error loading messages");
+    console.log(err);
+    return [];
+  }
 };
