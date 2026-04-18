@@ -10,13 +10,15 @@ const getAllMessages = (req, res) => {
 };
 
 const createMessage = (req, res) => {
+  console.log("BODY:", req.body); // 👈 ADD THIS
+
   const { name, email, message } = req.body;
 
   try {
     const result = db.addMessage(name, email, message);
 
     const newMessage = {
-      id: result.lastInsertRowid, // ✅ REAL DB ID
+      id: result.lastInsertRowid,
       name,
       email,
       message,
@@ -25,6 +27,7 @@ const createMessage = (req, res) => {
 
     res.json(newMessage);
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: "Failed to add message" });
   }
 };
