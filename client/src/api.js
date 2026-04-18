@@ -1,15 +1,17 @@
-// src/api.js
-
-const BASE_URL = "https://messages-backend-p1nt.onrender.com"; // your real URL
+const BASE_URL = "https://messages-backend-p1nt.onrender.com";
 
 // GET all messages
 export const getMessages = async () => {
   const res = await fetch(`${BASE_URL}/api/messages`);
-  return res.json();
+  const data = await res.json();
+  console.log("GET:", data);
+  return data;
 };
 
 // POST new message
 export const addMessage = async (newMessage) => {
+  console.log("SENDING:", newMessage);
+
   const res = await fetch(`${BASE_URL}/api/messages`, {
     method: "POST",
     headers: {
@@ -18,7 +20,10 @@ export const addMessage = async (newMessage) => {
     body: JSON.stringify(newMessage)
   });
 
-  return res.json();
+  const data = await res.json();
+  console.log("POST RESPONSE:", data);
+
+  return data;
 };
 
 // DELETE message

@@ -4,22 +4,25 @@ import MessageForm from "./components/MessageForm";
 import { getMessages, deleteMessage } from "./api";
 import Login from "./components/Login/Login";
 
-
 export default function App() {
   const [messages, setMessages] = useState([]);
   const [search, setSearch] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  // ✅ define first
+  const loadMessages = async () => {
+    try {
+      const data = await getMessages();
+      setMessages(data);
+    } catch (err) {
+      console.log("Error loading messages:", err);
+    }
+  };
+
+  // ✅ then use it
   useEffect(() => {
     loadMessages();
   }, []);
-
-  const [isLoggedIn, setIsLoggedIn] = 
-  useState(false);
-
-  const loadMessages = async () => {
-    const data = await getMessages();
-    setMessages(data);
-  };
 
   const handleDelete = async (id) => {
     await deleteMessage(id);
@@ -30,15 +33,16 @@ export default function App() {
     loadMessages();
   };
 
-  const filteredMessages = messages.filter((msg) =>
-    (msg.name || "").toLowerCase().includes(search.toLowerCase()) ||
-    (msg.email || "").toLowerCase().includes(search.toLowerCase()) ||
-    (msg.message || "").toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredMessages = Array.isArray(messages)
+    ? messages.filter((msg) =>
+        (msg.name || "").toLowerCase().includes(search.toLowerCase()) ||
+        (msg.email || "").toLowerCase().includes(search.toLowerCase()) ||
+        (msg.message || "").toLowerCase().includes(search.toLowerCase())
+      )
+    : [];
 
   if (!isLoggedIn) {
-  return <Login onLogin={() =>
-  setIsLoggedIn(true)} />;
+    return <Login onLogin={() => setIsLoggedIn(true)} />;
   }
 
   return (
@@ -62,7 +66,7 @@ export default function App() {
         Manage all incoming messages
       </p>
 
-      {/* 🔍 Search input */}
+      {/* 🔍 Search */}
       <input
         placeholder="🔍 Search messages..."
         value={search}
@@ -70,7 +74,8 @@ export default function App() {
         style={{
           width: "80%",
           padding: "10px",
-          margin: "40px auto",
+          margin: "20px auto",
+          display: "block",
           border: "1px solid #ddd",
           borderRadius: "6px"
         }}
