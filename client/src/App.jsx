@@ -50,7 +50,7 @@ export default function App() {
       maxWidth: "700px",
       margin: "40px auto",
       fontFamily: "Arial, sans-serif",
-      background: "#f3f4f6"
+      background: "#f3f4f6",
       padding: "20px",
       borderRadius: "10px",
       boxShadow: "0 4px 12px rgba(0,0,0,0.1)"
