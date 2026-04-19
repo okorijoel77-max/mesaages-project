@@ -1,50 +1,50 @@
-import { useState } from "react";
-import { addMessage } from "../api";
+<form onSubmit={handleSubmit} style={{
+  display: "flex",
+  flexDirection: "column",
+  gap: "10px",
+  marginBottom: "20px"
+}}>
+  <input
+    placeholder="Name"
+    value={name}
+    onChange={(e) => setName(e.target.value)}
+    style={{
+      padding: "10px",
+      borderRadius: "6px",
+      border: "1px solid #ddd"
+    }}
+  />
 
-export default function MessageForm({ onAdd }) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+  <input
+    placeholder="Email"
+    value={email}
+    onChange={(e) => setEmail(e.target.value)}
+    style={{
+      padding: "10px",
+      borderRadius: "6px",
+      border: "1px solid #ddd"
+    }}
+  />
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  <textarea
+    placeholder="Message"
+    value={message}
+    onChange={(e) => setMessage(e.target.value)}
+    style={{
+      padding: "10px",
+      borderRadius: "6px",
+      border: "1px solid #ddd"
+    }}
+  />
 
-    const newMessage = { name, email, message };
-
-    try {
-      await addMessage(newMessage);
-      onAdd();
-
-      setName("");
-      setEmail("");
-      setMessage("");
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <input
-        placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-
-      <input
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-
-      <input
-        placeholder="Message"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-      />
-
-      <button type="submit">Send</button>
-    </form>
-  );
-}
-
+  <button style={{
+    padding: "10px",
+    background: "#2563eb",
+    color: "#fff",
+    border: "none",
+    borderRadius: "6px",
+    cursor: "pointer"
+  }}>
+    Send Message
+  </button>
+</form>
