@@ -31,15 +31,15 @@ export const addMessage = async (newMessage) => {
       body: JSON.stringify(newMessage)
     });
 
-    console.log("POST STATUS:", res.status);
+    console.log("STATUS:", res.status);
 
-    const data = await res.json();
-    console.log("POST RESPONSE:", data);
+    const text = await res.text();
+    console.log("RAW RESPONSE:", text);
 
-    return data;
+    return JSON.parse(text);
   } catch (err) {
-    alert("Failed to send message");
-    console.log(err);
+    alert("Failed to send");
+    console.log("ERROR:", err);
   }
 };
 

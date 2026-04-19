@@ -35,7 +35,7 @@ export default function MessageForm({ onAdd }) {
       }}
     >
       <input
-        placeholder="Name"
+        placeholder="Full Name"
         value={name}
         onChange={(e) => setName(e.target.value)}
         style={{
@@ -46,9 +46,9 @@ export default function MessageForm({ onAdd }) {
       />
 
       <input
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Phone Number"
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
         style={{
           padding: "10px",
           borderRadius: "6px",
@@ -56,8 +56,30 @@ export default function MessageForm({ onAdd }) {
         }}
       />
 
+	<input
+        placeholder="Pickup Location"
+        value={pickup}
+        onChange={(e) => setPickup(e.target.value>
+        style={{
+          padding: "10px",
+          borderRadius: "6px",
+          border: "1px solid #ddd"
+        }}
+      />
+	
+	<input
+        placeholder="Drop-off Location"
+        value={dropoff}
+        onChange={(e) => setDrop(e.target.value>
+        style={{
+          padding: "10px",
+          borderRadius: "6px",
+          border: "1px solid #ddd"
+        }}
+      />	
+
       <textarea
-        placeholder="Message"
+        placeholder="Package Details"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         style={{
