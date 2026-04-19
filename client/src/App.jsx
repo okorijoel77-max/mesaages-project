@@ -9,7 +9,6 @@ export default function App() {
   const [search, setSearch] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // ✅ define first
   const loadMessages = async () => {
     try {
       const data = await getMessages();
@@ -19,7 +18,6 @@ export default function App() {
     }
   };
 
-  // ✅ then use it
   useEffect(() => {
     loadMessages();
   }, []);
@@ -67,7 +65,6 @@ export default function App() {
         Manage all incoming messages
       </p>
 
-      {/* 🔍 Search */}
       <input
         placeholder="🔍 Search messages..."
         value={search}
