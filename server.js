@@ -14,11 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Allow your Vercel frontend
-app.use(cors({
-  origin: "https://mesaages-project-okorijoel77-maxs-projects.vercel.app",
-  methods: ["GET", "POST", "DELETE", "PUT"],
-  credentials: true
-}));
+app.use(cors());
 
 // =====================
 // TEST ROUTE
