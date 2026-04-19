@@ -21,7 +21,9 @@ async function initDB() {
     db.run(`CREATE TABLE IF NOT EXISTS messages (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
-        email TEXT,
+        phone TEXT,
+	pickup TEXT,
+	dropoff TEXT,
         message TEXT,
         created_at TEXT
       );
@@ -62,11 +64,11 @@ function getAllMessages() {
   });
 }
 
-function addMessage(name, email, message) {
+function addMessage(name, phone, pickup, dropoff, message) {
   const result = db.run(
-    `INSERT INTO messages (name, email, message, created_at)
+    `INSERT INTO messages (name, phone, pickup, dropoff, message, created_at)
      VALUES (?, ?, ?, ?)`,
-    [name, email, message, new Date().toLocaleString()]
+    [name, phone, pickup, dropoff, message, new Date().toLocaleString()]
   );
   saveDB(); // persist after insert
   return result; // 👈 IMPORTANT
