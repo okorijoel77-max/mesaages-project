@@ -52,7 +52,7 @@ export default function App() {
       fontFamily: "Arial, sans-serif",
       background: "#f3f4f6"
       padding: "20px",
-      borderRadius: "10px"
+      borderRadius: "10px",
       boxShadow: "0 4px 12px rgba(0,0,0,0.1)"
     }}>
       <h1 style={{ textAlign: "center" }}>
