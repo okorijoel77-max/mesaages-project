@@ -4,21 +4,31 @@ export default function MessageCard({ msg, onDelete }) {
       background: "#fff",
       padding: "15px",
       borderRadius: "10px",
-      marginBottom: "10px",
-      boxShadow: "0 2px 6px rgba(0,0,0,0.1)"
+      marginBottom: "12px",
+      boxShadow: "0 2px 8px rgba(0,0,0,0.08)"
     }}>
-      <h3 style={{ margin: 0 }}>{msg.name}</h3>
-      <p style={{ margin: "5px 0", color: "#555" }}>{msg.email}</p>
-      <p>{msg.message}</p>
+      <h3 style={{ margin: "0 0 5px 0" }}>{msg.name}</h3>
+
+      <p style={{
+        margin: "0 0 8px 0",
+        fontSize: "14px",
+        color: "#666"
+      }}>
+        {msg.email}
+      </p>
+
+      <p style={{ marginBottom: "10px" }}>
+        {msg.message}
+      </p>
 
       <button
         onClick={() => onDelete(msg.id)}
         style={{
-          background: "red",
+          background: "#ef4444",
           color: "#fff",
           border: "none",
           padding: "6px 10px",
-          borderRadius: "5px",
+          borderRadius: "6px",
           cursor: "pointer"
         }}
       >

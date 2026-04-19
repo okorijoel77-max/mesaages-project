@@ -48,38 +48,46 @@ export default function App() {
       maxWidth: "700px",
       margin: "40px auto",
       fontFamily: "Arial, sans-serif",
-      background: "#f3f4f6",
-      padding: "20px",
-      borderRadius: "10px",
-      boxShadow: "0 4px 12px rgba(0,0,0,0.1)"
+      background: "#ffffff",
+      padding: "25px",
+      borderRadius: "12px",
+      boxShadow: "0 6px 20px rgba(0,0,0,0.08)"
     }}>
-      <h1 style={{ textAlign: "center" }}>
-        📩 Messages Dashboard
-      </h1>
+    <h1 style={{
+      textAlign: "center",
+      marginBottom: "10px"
+    }}>
+      📩 Messages Dashboard
+    </h1>
 
-      <p style={{
-        textAlign: "center",
-        color: "#666",
-        marginBottom: "20px"
-      }}>
-        Manage all incoming messages
-      </p>
+    <p style={{
+      textAlign: "center",
+      color: "#777",
+      marginBottom: "25px"
+    }}>
+      Manage incoming messages easily
+    </p>
 
-      <input
-        placeholder="🔍 Search messages..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        style={{
-          width: "80%",
-          padding: "10px",
-          margin: "20px auto",
-          display: "block",
-          border: "1px solid #ddd",
-          borderRadius: "6px"
-        }}
-      />
+    <input
+      placeholder="🔍 Search messages..."
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      style={{
+      width: "100%",
+      padding: "12px",
+      marginBottom: "20px",
+      border: "1px solid #ddd",
+      borderRadius: "8px",
+      outline: "none"
+    }}
+   />
 
-      <p>Total Messages: {filteredMessages.length}</p>
+    <p style={{
+      fontWeight: "bold",
+      marginBottom: "15px"
+     }}>
+     Total Messages: {filteredMessages.length}
+    </p>
 
       <MessageForm onAdd={handleAdd} />
 
