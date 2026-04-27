@@ -67,11 +67,19 @@ function getAllMessages() {
 function addMessage(name, phone, pickup, dropoff, message) {
   const result = db.run(
     `INSERT INTO messages (name, phone, pickup, dropoff, message, created_at)
-     VALUES (?, ?, ?, ?)`,
-    [name, phone, pickup, dropoff, message, new Date().toLocaleString()]
+     VALUES (?, ?, ?, ?, ?, ?)`,
+    [
+      name,
+      phone,
+      pickup,
+      dropoff,
+      message,
+      new Date().toLocaleString()
+    ]
   );
-  saveDB(); // persist after insert
-  return result; // 👈 IMPORTANT
+
+  saveDB();
+  return result;
 }
 
 function updateMessage(id, text) {
