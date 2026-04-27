@@ -6,10 +6,22 @@ export default function MessageForm({ onAdd }) {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
+  // ✅ ADD THESE (missing before)
+  const [phone, setPhone] = useState("");
+  const [pickup, setPickup] = useState("");
+  const [dropoff, setDropoff] = useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newMessage = { name, email, message };
+    const newMessage = {
+      name,
+      email,
+      message,
+      phone,
+      pickup,
+      dropoff
+    };
 
     try {
       await addMessage(newMessage);
@@ -19,6 +31,9 @@ export default function MessageForm({ onAdd }) {
       setName("");
       setEmail("");
       setMessage("");
+      setPhone("");
+      setPickup("");
+      setDropoff("");
     } catch (err) {
       console.log("Error sending message:", err);
     }
@@ -38,69 +53,40 @@ export default function MessageForm({ onAdd }) {
         placeholder="Full Name"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        style={{
-          padding: "10px",
-          borderRadius: "6px",
-          border: "1px solid #ddd"
-        }}
+      />
+
+      <input
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
       />
 
       <input
         placeholder="Phone Number"
         value={phone}
         onChange={(e) => setPhone(e.target.value)}
-        style={{
-          padding: "10px",
-          borderRadius: "6px",
-          border: "1px solid #ddd"
-        }}
       />
 
-	<input
+      <input
         placeholder="Pickup Location"
         value={pickup}
-        onChange={(e) => setPickup(e.target.value>
-        style={{
-          padding: "10px",
-          borderRadius: "6px",
-          border: "1px solid #ddd"
-        }}
+        onChange={(e) => setPickup(e.target.value)}
       />
-	
-	<input
+
+      <input
         placeholder="Drop-off Location"
         value={dropoff}
-        onChange={(e) => setDrop(e.target.value>
-        style={{
-          padding: "10px",
-          borderRadius: "6px",
-          border: "1px solid #ddd"
-        }}
-      />	
+        onChange={(e) => setDropoff(e.target.value)}
+      />
 
       <textarea
         placeholder="Package Details"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        style={{
-          padding: "10px",
-          borderRadius: "6px",
-          border: "1px solid #ddd"
-        }}
       />
 
-      <button
-        type="submit"
-        style={{
-          padding: "10px",
-          background: "#2563eb",
-          color: "#fff",
-          border: "none",
-          borderRadius: "6px",
-          cursor: "pointer"
-        }}
-      >
-        Send Message
+      <button type="submit">
+        Send Request
       </button>
     </form>
   );
