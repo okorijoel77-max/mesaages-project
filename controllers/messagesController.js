@@ -12,15 +12,17 @@ const getAllMessages = (req, res) => {
 const createMessage = (req, res) => {
   console.log("BODY:", req.body); // 👈 ADD THIS
 
-  const { name, email, message } = req.body;
+  const { name, phone, pickup, dropoff, message } = req.body;
 
   try {
-    const result = db.addMessage(name, email, message);
+    const result = db.addMessage(name, phone, pickup, dropoff,  message);
 
     const newMessage = {
       id: result.lastInsertRowid,
       name,
-      email,
+      phone,
+      pickup,
+      dropoff,
       message,
       created_at: new Date().toLocaleString()
     };
