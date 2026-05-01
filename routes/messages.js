@@ -1,13 +1,17 @@
-// routes/messages.js
-
 const express = require("express");
 const router = express.Router();
 
-const messagesController = require("../controllers/messagesController");
+const {
+  getAllMessages,
+  createMessage,
+  updateMessage,
+  deleteMessage
+} = require("../controllers/messagesController");
 
-router.get("/", messagesController.getAllMessages);
-router.post("/", messagesController.createMessage);
-router.put("/:id", messagesController.updateMessage);
-router.delete("/:id", messagesController.deleteMessage);
+// routes
+router.get("/", getAllMessages);
+router.post("/", createMessage);
+router.put("/:id", updateMessage);
+router.delete("/:id", deleteMessage);
 
 module.exports = router;
